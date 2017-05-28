@@ -1,7 +1,6 @@
 require('dotenv').config();
 
 import express from 'express';
-import path from 'path';
 import compression from 'compression';
 import helmet from 'helmet';
 import bodyParser from 'body-parser';
@@ -39,7 +38,7 @@ app.use((err, req, res, next) => {
     .json(SERVER_ERROR.message);
 });
 
-app.listen(port, err =>
+app.listen(port, (err) =>
   logger.info(err ? err : `Server is Running with port ${port}`));
 
 export default app;

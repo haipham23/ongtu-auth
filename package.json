@@ -2,6 +2,10 @@
   "name": "ongtu-auth",
   "version": "0.1.0",
   "private": true,
+  "main": "index.js",
+  "repository": "https://github.com/haipham23/ongtu-auth",
+  "author": "Hai Pham <haipham23@gmail.com>",
+  "license": "MIT",
   "engines": {
     "node": "6",
     "npm": "3"
@@ -22,7 +26,6 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.15.2",
     "compression": "^1.6.2",
-    "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
     "dotenv": "^4.0.0",
     "express": "~4.13.4",
@@ -30,12 +33,9 @@
     "getenv": "^0.7.0",
     "helmet": "^3.6.1",
     "heroku-ssl-redirect": "0.0.4",
-    "jade": "~1.11.0",
     "jsonwebtoken": "^7.4.1",
     "lodash": "^4.17.4",
     "monk": "^5.0.2",
-    "morgan": "~1.7.0",
-    "serve-favicon": "~2.3.0",
     "version-healthcheck": "^0.1.2",
     "winston": "^2.3.1"
   },
