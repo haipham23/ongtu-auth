@@ -11,6 +11,7 @@
     "npm": "3"
   },
   "scripts": {
+    "postinstall": "npm run build",
     "start": "node ./dist/index.js",
     "build": "babel src --out-dir dist --copy-files",
     "start:dev": "babel-node ./src/index.js",
