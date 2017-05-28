@@ -7,6 +7,15 @@ import {
   SERVER_ERROR
 } from '../constants/responses';
 
+/**
+ * login
+ *
+ * @param {object} req
+ * @param {object} res
+ * @param {object} db
+ *
+ * @return {object} json response
+ */
 async function login(req, res, db) {
   const account = new Account(req.body);
 
@@ -15,7 +24,8 @@ async function login(req, res, db) {
     const user = await collection.findOne({ username: account.username });
 
     if (!user) {
-      logger.debug('-- acount login controller: user not found --', account.username);
+      logger.debug('-- acount login controller: user not found --',
+        account.username);
 
       return res.status(ACCOUNT_NOT_FOUND.status)
         .json(ACCOUNT_NOT_FOUND.message);
@@ -24,7 +34,8 @@ async function login(req, res, db) {
     const isMatch = await account.compare(user.password);
 
     if (!isMatch) {
-      logger.debug('-- acount login controller: password not match --', account.username);
+      logger.debug('-- acount login controller: password not match --',
+        account.username);
 
       return res.status(ACCOUNT_NOT_FOUND.status)
         .json(ACCOUNT_NOT_FOUND.message);
@@ -34,7 +45,6 @@ async function login(req, res, db) {
 
     return res.status(OK.status)
       .json(token);
-
   } catch(e) {
     logger.debug('-- acount create controller: uncaught error --', e);
 
@@ -46,5 +56,5 @@ async function login(req, res, db) {
 }
 
 export default {
-  login,
+  login
 };

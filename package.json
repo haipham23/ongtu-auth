@@ -6,8 +6,13 @@
     "start": "node ./dist/index.js",
     "build": "babel src --out-dir dist --copy-files",
     "start:dev": "babel-node ./src/index.js",
+    "lint": "eslint ./src/**/*.js",
     "test": "NODE_ENV=test LOG_LEVEL=debug mocha ./src/setup/test.js ./src/**/*.spec.js --compilers js:babel-core/register --require babel-polyfill --timeout 10000"
   },
+  "pre-commit": [
+    "lint",
+    "test"
+  ],
   "dependencies": {
     "ajv": "^5.1.4",
     "bcryptjs": "^2.4.3",
@@ -32,12 +37,16 @@
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
+    "babel-eslint": "^7.2.3",
     "babel-plugin-transform-async-to-generator": "^6.24.1",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-polyfill": "^6.23.0",
     "babel-preset-es2015": "^6.24.1",
     "chai": "^4.0.0",
+    "eslint": "^3.19.0",
+    "eslint-config-google": "^0.7.1",
     "mocha": "^3.4.2",
+    "pre-commit": "^1.2.2",
     "sinon": "^2.3.2",
     "supertest": "^3.0.0"
   }

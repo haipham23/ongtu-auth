@@ -19,7 +19,7 @@ describe('Account Login Controller', () => {
     password: 'validpassword'
   };
 
-  it('should fail - invalid username', done => {
+  it('should fail - invalid username', (done) => {
     request(app)
       .post('/api/account/login')
       .send(INVALID_ACCOUNT_1)
@@ -31,7 +31,7 @@ describe('Account Login Controller', () => {
       });
   });
 
-  it('should fail - invalid password', done => {
+  it('should fail - invalid password', (done) => {
     request(app)
       .post('/api/account/login')
       .send(INVALID_ACCOUNT_2)
@@ -43,7 +43,7 @@ describe('Account Login Controller', () => {
       });
   });
 
-  it('should success', done => {
+  it('should success', (done) => {
     request(app)
       .post('/api/account/login')
       .send(VALID_ACCOUNT)

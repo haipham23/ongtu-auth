@@ -7,11 +7,11 @@ describe('=== prepare ===', () => {
   const db = require('monk')(mongoURI);
   const accounts = db.get('accounts');
 
-  it('should clean db', done => {
+  it('should clean db', (done) => {
     accounts.remove({}, done);
   });
 
-  it('should initialize db', done => {
+  it('should initialize db', (done) => {
     const account = new Account({
       username: 'validusername',
       password: 'validpassword',

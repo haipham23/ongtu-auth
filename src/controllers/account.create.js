@@ -6,11 +6,20 @@ import {
   SERVER_ERROR
 } from '../constants/responses';
 
+/**
+ * create account
+ * @param {object} req request object
+ * @param {object} res response object
+ * @param {object} db database object
+ *
+ * @return {object} json response
+ */
 async function create(req, res, db) {
   const account = new Account(req.body);
 
   if (!account.isValid()) {
-    logger.debug('-- acount create controller: invalid info --', account.username, account.email);
+    logger.debug('-- acount create controller: invalid info --',
+      account.username, account.email);
 
     return res.status(INVALID_PROPS.status)
       .json(INVALID_PROPS.message);
@@ -27,7 +36,8 @@ async function create(req, res, db) {
     })).length > 0;
 
     if (isExisting) {
-      logger.debug('-- acount create controller: username or email exist --', account.username, account.email);
+      logger.debug('-- acount create controller: username or email exist --',
+        account.username, account.email);
 
       return res.status(INVALID_PROPS.status)
         .json(INVALID_PROPS.message);
@@ -55,5 +65,5 @@ async function create(req, res, db) {
 }
 
 export default {
-  create,
+  create
 };

@@ -1,0 +1,16 @@
+{
+  "parser": "babel-eslint",
+  "extends": ["eslint:recommended", "google"],
+  "rules": {
+    "strict": 0,
+    "comma-dangle": ["error", "never"],
+    "object-curly-spacing": ["error", "always"]
+  },
+  "globals": {
+    "it": true,
+    "describe": true,
+    "setTimeout": true,
+    "process": true,
+    "require": true
+  }
+}

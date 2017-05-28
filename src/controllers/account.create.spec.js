@@ -30,7 +30,7 @@ describe('Account Create Controller', () => {
     email: 'test@example.com'
   };
 
-  it('should fail - missing information', done => {
+  it('should fail - missing information', (done) => {
     request(app)
       .post('/api/account/create')
       .send(INVALID_ACCOUNT_1)
@@ -42,7 +42,8 @@ describe('Account Create Controller', () => {
       });
   });
 
-  it('should fail - username, password, email do not meet requirements - 1', done => {
+  it('should fail - username, password, email do not meet requirements - 1',
+    (done) => {
     request(app)
       .post('/api/account/create')
       .send(INVALID_ACCOUNT_2)
@@ -54,7 +55,8 @@ describe('Account Create Controller', () => {
       });
   });
 
-  it('should fail - username, password, email do not meet requirements - 2', done => {
+  it('should fail - username, password, email do not meet requirements - 2',
+    (done) => {
     request(app)
       .post('/api/account/create')
       .send(INVALID_ACCOUNT_3)
@@ -66,7 +68,8 @@ describe('Account Create Controller', () => {
       });
   });
 
-  it('should fail - username, password, email do not meet requirements - 3', done => {
+  it('should fail - username, password, email do not meet requirements - 3',
+    (done) => {
     request(app)
       .post('/api/account/create')
       .send(INVALID_ACCOUNT_4)
@@ -78,7 +81,7 @@ describe('Account Create Controller', () => {
       });
   });
 
-  it('should success and create new account', done => {
+  it('should success and create new account', (done) => {
     request(app)
       .post('/api/account/create')
       .send(VALID_ACCOUNT)
@@ -90,7 +93,7 @@ describe('Account Create Controller', () => {
       });
   });
 
-  it('should fail - account exists', done => {
+  it('should fail - account exists', (done) => {
     request(app)
       .post('/api/account/create')
       .send(VALID_ACCOUNT)
