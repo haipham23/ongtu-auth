@@ -1,24 +1,33 @@
-export const OK = {
+const OK = {
   status: 200,
   message: 'OK'
 };
 
-export const INVALID_PROPS = {
+const INVALID_PROPS = {
   status: 400,
   message: 'INVALID_PROPS'
 };
 
-export const EXISTING_ACCOUNT = {
+const EXISTING_ACCOUNT = {
   status: 400,
   message: 'EXISTING_ACCOUNT'
 };
 
-export const ACCOUNT_NOT_FOUND = {
+const ACCOUNT_NOT_FOUND = {
   status: 404,
   message: 'ACCOUNT_NOT_FOUND'
 };
 
-export const SERVER_ERROR = {
+const SERVER_ERROR = {
   status: 500,
   message: 'SERVER_ERROR'
+};
+
+
+module.exports = {
+  OK,
+  INVALID_PROPS,
+  EXISTING_ACCOUNT,
+  ACCOUNT_NOT_FOUND,
+  SERVER_ERROR
 };

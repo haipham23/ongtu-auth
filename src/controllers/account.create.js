@@ -1,10 +1,10 @@
-import Account from '../models/account';
-import logger from '../utils/logger';
-import {
+const Account = require('../models/account');
+const logger = require('../utils/logger');
+const {
   OK,
   INVALID_PROPS,
   SERVER_ERROR
-} from '../constants/responses';
+} = require('../constants/responses');
 
 /**
  * create account
@@ -64,6 +64,6 @@ async function create(req, res, db) {
   }
 }
 
-export default {
+module.export = {
   create
 };
