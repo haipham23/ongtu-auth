@@ -64,6 +64,6 @@ async function create(req, res, db) {
   }
 }
 
-module.export = {
+module.exports = {
   create
 };

@@ -1,8 +1,8 @@
-import _ from 'lodash';
-import Ajv from 'ajv';
-import bcrypt from 'bcryptjs';
-import schema from './account.json';
-import logger from '../utils/logger';
+const _ = require('lodash');
+const Ajv = require('ajv');
+const bcrypt = require('bcryptjs');
+const schema = require('./account.json');
+const logger = require('../utils/logger');
 
 const ajv = new Ajv();
 const validate = ajv.compile(schema);
@@ -76,4 +76,4 @@ const Account = class Account {
   }
 };
 
-export default Account;
+module.exports = Account;

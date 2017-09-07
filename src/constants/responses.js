@@ -23,7 +23,6 @@ const SERVER_ERROR = {
   message: 'SERVER_ERROR'
 };
 
-
 module.exports = {
   OK,
   INVALID_PROPS,

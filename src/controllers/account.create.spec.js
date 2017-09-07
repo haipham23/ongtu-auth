@@ -1,7 +1,7 @@
-import { expect } from 'chai';
-import request from 'supertest';
+const { expect } = require('chai');
+const request = require('supertest');
 
-import app from '../index';
+const app = require('../index');
 
 describe('Account Create Controller', () => {
   const INVALID_ACCOUNT_1 = {};

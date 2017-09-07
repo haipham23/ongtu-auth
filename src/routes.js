@@ -1,11 +1,10 @@
-import express from 'express';
+/* eslint new-cap: ["error", { "properties": false }] */
+const router = require('express').Router();
 
-import accountCreateController from './controllers/account.create';
-import accountLoginController from './controllers/account.login';
+const accountCreateController = require('./controllers/account.create');
+const accountLoginController = require('./controllers/account.login');
 
-export default function router(app, db) {
-  const router = express.Router();
-
+const route = (app, db) => {
   router.post('/account/create', (req, res) =>
     accountCreateController.create(req, res, db));
 
@@ -14,4 +13,6 @@ export default function router(app, db) {
 
   /* General */
   app.use('/api', router);
-}
+};
+
+module.exports = route;

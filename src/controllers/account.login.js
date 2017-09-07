@@ -1,11 +1,11 @@
-import Account from '../models/account';
-import logger from '../utils/logger';
-import jwt from '../utils/jwt';
-import {
+const Account = require('../models/account');
+const logger = require('../utils/logger');
+const jwt = require('../utils/jwt');
+const {
   OK,
   ACCOUNT_NOT_FOUND,
   SERVER_ERROR
-} from '../constants/responses';
+} = require('../constants/responses');
 
 /**
  * login
@@ -55,6 +55,6 @@ async function login(req, res, db) {
   }
 }
 
-export default {
+module.exports = {
   login
 };

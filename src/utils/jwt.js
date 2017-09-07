@@ -1,5 +1,5 @@
-import jwt from 'jsonwebtoken';
-import getenv from 'getenv';
+const jwt = require('jsonwebtoken');
+const getenv = require('getenv');
 
 /**
  * generate jwt
@@ -16,6 +16,6 @@ function generate(username) {
   );
 }
 
-export default {
+module.exports = {
   generate
 };

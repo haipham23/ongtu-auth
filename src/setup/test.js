@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-import Account from '../models/account';
+const Account = require('../models/account');
 
 describe('=== prepare ===', () => {
   const mongoURI = process.env.MONGO_URI_TEST;

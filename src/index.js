@@ -1,17 +1,17 @@
 require('dotenv').config();
 
-import express from 'express';
-import compression from 'compression';
-import helmet from 'helmet';
-import bodyParser from 'body-parser';
-import sslRedirect from 'heroku-ssl-redirect';
-import monk from 'monk';
-import getenv from 'getenv';
+const express = require('express');
+const compression = require('compression');
+const helmet = require('helmet');
+const bodyParser = require('body-parser');
+const sslRedirect = require('heroku-ssl-redirect');
+const monk = require('monk');
+const getenv = require('getenv');
 
-import routes from './routes';
-import logger from './utils/logger';
+const routes = require('./routes');
+const logger = require('./utils/logger');
 
-import { SERVER_ERROR } from './constants/responses';
+const { SERVER_ERROR } = require('./constants/responses');
 
 const mongoUri = getenv('NODE_ENV') !== 'test' ?
   getenv('MONGO_URI') :
@@ -41,4 +41,4 @@ app.use((err, req, res, next) => {
 app.listen(port, (err) =>
   logger.info(err ? err : `Server is Running with port ${port}`));
 
-export default app;
+module.exports = app;

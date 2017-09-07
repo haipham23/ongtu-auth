@@ -1,5 +1,5 @@
-import Account from './account';
-import { expect } from 'chai';
+const Account = require('./account');
+const expect = require('chai').expect;
 
 describe('Account model', () => {
   it('should fail to create account - invalid username', () => {
