@@ -1,12 +1,13 @@
 const winston = require('winston');
+const getenv = require('getenv');
 
-const isDebug = process.env.LOG_LEVEL === 'debug';
-const isProd = process.env.NODE_ENV === 'production';
+const isProd = getenv('NODE_ENV') === 'production';
+const logLevel = getenv('LOG_LEVEL', 'info');
 
 const logger = new (winston.Logger)({
   transports: [
     new (winston.transports.Console)({
-      level: isDebug ? 'debug' : 'info',
+      level: logLevel,
       colorize: true,
       json: isProd,
       stringify: isProd,
@@ -14,5 +15,10 @@ const logger = new (winston.Logger)({
     })
   ]
 });
+
+// disable log on unit test
+if (logLevel === 'test') {
+  logger.remove(winston.transports.Console);
+}
 
 module.exports = logger;
