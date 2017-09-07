@@ -21,7 +21,11 @@ async function login(req, res, db) {
 
   try {
     const collection = db.get('accounts');
-    const user = await collection.findOne({ username: account.username });
+    const user = await collection.findOne({
+      username: account.username
+    }, {
+      fields: { username: 1, password: 1 }
+    });
 
     if (!user) {
       logger.debug('-- acount login controller: user not found --',
@@ -46,7 +50,7 @@ async function login(req, res, db) {
     return res.status(OK.status)
       .json(token);
   } catch(e) {
-    logger.debug('-- acount create controller: uncaught error --', e);
+    logger.debug('-- acount login controller: uncaught error --', e);
 
     return res.status(SERVER_ERROR.status)
       .json(SERVER_ERROR.message);

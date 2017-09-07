@@ -13,7 +13,8 @@
   "scripts": {
     "start": "node ./src/index.js",
     "lint": "eslint ./src/**/*.js",
-    "test": "cross-env NODE_ENV=test LOG_LEVEL=test mocha ./src/setup/test.js ./src/**/*.spec.js --timeout 10000"
+    "test": "cross-env NODE_ENV=test LOG_LEVEL=test mocha ./src/setup/test.js ./src/**/*.spec.js --timeout 10000",
+    "debug": "cross-env NODE_ENV=test LOG_LEVEL=debug mocha ./src/setup/test.js ./src/**/*.spec.js --timeout 10000"
   },
   "pre-commit": [
     "lint",

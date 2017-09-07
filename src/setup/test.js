@@ -1,9 +1,11 @@
 require('dotenv').config();
 
+const getenv = require('getenv');
+
 const Account = require('../models/account');
 
 describe('=== prepare ===', () => {
-  const mongoURI = process.env.MONGO_URI_TEST;
+  const mongoURI = getenv('MONGO_URI_TEST');
   const db = require('monk')(mongoURI);
   const accounts = db.get('accounts');
 
@@ -19,6 +21,9 @@ describe('=== prepare ===', () => {
     });
 
     const validUser = account.create();
-    accounts.insert(validUser, () => setTimeout(() => db.close(done), 1000));
+
+    accounts
+      .insert(validUser)
+      .then(() => db.close(done));
   });
 });
