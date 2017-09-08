@@ -17,7 +17,7 @@ const {
 async function create(req, res, db) {
   const account = new Account(req.body);
 
-  if (!account.isValid()) {
+  if (account.isValid()) {
     logger.debug('-- acount create controller: invalid info --',
       account.username, account.email);
 
