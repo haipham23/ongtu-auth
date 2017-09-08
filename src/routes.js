@@ -1,15 +1,14 @@
 /* eslint new-cap: ["error", { "properties": false }] */
 const router = require('express').Router();
 
-const accountCreateController = require('./controllers/account.create');
-const accountLoginController = require('./controllers/account.login');
+const accountController = require('./controllers/accountController');
 
 const route = (app, db) => {
   router.post('/account/create', (req, res) =>
-    accountCreateController.create(req, res, db));
+    accountController.create(req, res, db));
 
   router.post('/account/login', (req, res) =>
-    accountLoginController.login(req, res, db));
+    accountController.login(req, res, db));
 
   /* General */
   app.use('/api', router);
