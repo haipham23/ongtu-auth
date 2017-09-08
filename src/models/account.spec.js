@@ -1,7 +1,13 @@
 const Account = require('./account');
-const expect = require('chai').expect;
+const { expect } = require('chai');
 
 describe('Account model', () => {
+  it('should fail to create account - empty body', () => {
+    const account = new Account();
+
+    expect(account.isValid()).to.be.false;
+  });
+
   it('should fail to create account - invalid username', () => {
     const account1 = new Account({
       password: 'testPassword',

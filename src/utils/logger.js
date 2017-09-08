@@ -17,6 +17,7 @@ const logger = new (winston.Logger)({
 });
 
 // disable log on unit test
+// istanbul ignore next
 if (logLevel === 'test') {
   logger.remove(winston.transports.Console);
 }

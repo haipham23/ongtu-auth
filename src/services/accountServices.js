@@ -3,7 +3,6 @@ const jwt = require('../utils/jwt');
 const {
   OK,
   INVALID_PROPS,
-  SERVER_ERROR,
   ACCOUNT_NOT_FOUND
 } = require('../constants/responses');
 
@@ -35,11 +34,7 @@ async function create(body, db) {
     throw new Error(INVALID_PROPS);
   }
 
-  const result = (await collection.insert(account.create()));
-
-  if (!result) {
-    throw new Error(SERVER_ERROR);
-  }
+  await collection.insert(account.create());
 
   return OK;
 }

@@ -21,6 +21,13 @@
     "lint",
     "test"
   ],
+  "nyc": {
+    "exclude": [
+      "src/**/*.spec.js",
+      "src/index.js",
+      "src/routes.js"
+    ]
+  },
   "dependencies": {
     "ajv": "^5.1.4",
     "bcryptjs": "^2.4.3",
