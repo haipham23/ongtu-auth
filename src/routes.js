@@ -2,8 +2,11 @@
 const router = require('express').Router();
 
 const accountController = require('./controllers/accountController');
+const { version } = require('../package.json');
 
 const route = (app, db) => {
+  router.get('/version', (req, res) => res.json(version));
+
   router.post('/account/create', (req, res) =>
     accountController.create(req, res, db));
 
