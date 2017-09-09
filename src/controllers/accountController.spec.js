@@ -2,6 +2,7 @@ const { expect } = require('chai');
 const request = require('supertest');
 
 const app = require('../index');
+const jwt = require('../utils/jwt');
 
 describe('Account Create Controller', () => {
   const INVALID_ACCOUNT_1 = {};
@@ -155,6 +156,75 @@ describe('Account Login Controller', () => {
         expect(err).to.not.exist;
         expect(res.status).to.equal(200);
         expect(res.body).to.be.string;
+        done();
+      });
+  });
+});
+
+
+describe('Account Verify Controller', () => {
+  const INVALID_TOKEN_1 = {
+    token: 'invalidtoken'
+  };
+
+  const INVALID_TOKEN_2 = {
+    username: 'invalidusername'
+  };
+
+  const INVALID_TOKEN_3 = {
+    token: 'invalidtoken',
+    username: 'invalidusername'
+  };
+
+  const VALID_TOKEN = {
+    token: jwt.generate('validusername'),
+    username: 'validusername'
+  };
+
+  it('should fail - missing username', (done) => {
+    request(app)
+      .post('/api/account/verify')
+      .send(INVALID_TOKEN_1)
+      .end((err, res) => {
+        expect(err).to.not.exist;
+        expect(res.status).to.equal(400);
+        expect(res.body).to.equal('INVALID_TOKEN');
+        done();
+      });
+  });
+
+  it('should fail - missing token', (done) => {
+    request(app)
+      .post('/api/account/verify')
+      .send(INVALID_TOKEN_2)
+      .end((err, res) => {
+        expect(err).to.not.exist;
+        expect(res.status).to.equal(400);
+        expect(res.body).to.equal('INVALID_TOKEN');
+        done();
+      });
+  });
+
+  it('should fail - invalid token', (done) => {
+    request(app)
+      .post('/api/account/verify')
+      .send(INVALID_TOKEN_3)
+      .end((err, res) => {
+        expect(err).to.not.exist;
+        expect(res.status).to.equal(400);
+        expect(res.body).to.equal('INVALID_TOKEN');
+        done();
+      });
+  });
+
+  it('should success', (done) => {
+    request(app)
+      .post('/api/account/verify')
+      .send(VALID_TOKEN)
+      .end((err, res) => {
+        expect(err).to.not.exist;
+        expect(res.status).to.equal(200);
+        expect(res.body).to.equal('OK');
         done();
       });
   });

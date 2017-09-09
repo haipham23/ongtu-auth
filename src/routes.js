@@ -13,6 +13,9 @@ const route = (app, db) => {
   router.post('/account/login', (req, res) =>
     accountController.login(req, res, db));
 
+  router.post('/account/verify', (req, res) =>
+    accountController.verify(req, res, db));
+
   /* General */
   app.use('/api', router);
 };

@@ -1,5 +1,7 @@
 const accountServices = require('../services/accountServices');
-
+const {
+  INVALID_TOKEN
+} = require('../constants/responses');
 
 /**
  * create account
@@ -29,7 +31,21 @@ function login(req, res, db) {
 }
 
 
+/**
+ * verify
+ * @param {object} req request object
+ * @param {object} res response object
+ */
+function verify(req, res) {
+  accountServices
+    .verify(req.body)
+    .then((result) => res.json(result))
+    .catch((error) => res.status(400).json(INVALID_TOKEN));
+}
+
+
 module.exports = {
   create,
-  login
+  login,
+  verify
 };

@@ -71,7 +71,31 @@ async function login(body, db) {
 }
 
 
+/**
+ * verify
+ *
+ * @param {string} body
+ *
+ * @return {Promise} username
+ */
+function verify(body) {
+  return new Promise((resolve, reject) => {
+    const { token, username } = body;
+
+    if (
+      !token ||
+      !username ||
+      username !== jwt.verify(token)) {
+      return reject();
+    }
+
+    resolve(OK);
+  });
+}
+
+
 module.exports = {
   create,
-  login
+  login,
+  verify
 };

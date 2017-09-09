@@ -16,6 +16,21 @@ function generate(username) {
   );
 }
 
+
+/**
+ * verify jwt token
+ *
+ * @param {string} token
+ *
+ * @return {string} username
+ */
+function verify(token) {
+  const { user } = jwt.verify(token, getenv('JWT_SECRET'));
+
+  return user;
+}
+
 module.exports = {
-  generate
+  generate,
+  verify
 };
