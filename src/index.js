@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const sslRedirect = require('heroku-ssl-redirect');
 const monk = require('monk');
 const getenv = require('getenv');
+const cors = require('cors');
 
 const routes = require('./routes');
 const logger = require('./utils/logger');
@@ -22,6 +23,7 @@ const port = getenv('PORT') || 8080;
 const app = express();
 
 app.use(helmet({ noCache: true }));
+app.use(cors());
 app.use(compression());
 app.use(sslRedirect());
 app.use(bodyParser.json());
