@@ -59,5 +59,4 @@ typings/
 
 # dist folder
 /dist
-package-lock.json
 /coverage
