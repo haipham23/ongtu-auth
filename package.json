@@ -1,7 +1,6 @@
 {
   "name": "ongtu-auth",
   "version": "1.0.0",
-  "private": true,
   "main": "index.js",
   "repository": "https://github.com/haipham23/ongtu-auth",
   "author": "Hai Pham <haipham23@gmail.com>",
