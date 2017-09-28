@@ -12,7 +12,7 @@ function generate(username) {
   return jwt.sign(
     { user: username },
     getenv('JWT_SECRET'),
-    { expiresIn: '7 days' }
+    { expiresIn: '2 days' }
   );
 }
 

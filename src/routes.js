@@ -2,6 +2,7 @@
 const router = require('express').Router();
 
 const accountController = require('./controllers/accountController');
+const productController = require('./controllers/productController');
 const { version } = require('../package.json');
 
 const route = (app, db) => {
@@ -15,6 +16,9 @@ const route = (app, db) => {
 
   router.post('/account/verify', (req, res) =>
     accountController.verify(req, res, db));
+
+  router.post('/store/products', (req, res) =>
+    productController.add(req, res, db));
 
   /* General */
   app.use('/api', router);

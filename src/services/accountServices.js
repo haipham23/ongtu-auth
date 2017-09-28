@@ -93,9 +93,29 @@ function verify(body) {
   });
 }
 
+/**
+ * getUsername
+ *
+ * @param {string} token
+ *
+ * @return {string} username
+ */
+function getUsername(token) {
+  return new Promise((resolve, reject) => {
+    const username = jwt.verify(token);
+
+    if (!username) {
+      return reject('Invalid Token');
+    }
+
+    return resolve(username);
+  });
+}
+
 
 module.exports = {
   create,
   login,
-  verify
+  verify,
+  getUsername
 };

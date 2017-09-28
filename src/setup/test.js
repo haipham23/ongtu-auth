@@ -8,9 +8,14 @@ describe('=== prepare ===', () => {
   const mongoURI = getenv('MONGO_URI_TEST');
   const db = require('monk')(mongoURI);
   const accounts = db.get('accounts');
+  const products = db.get('products');
 
-  it('should clean db', (done) => {
+  it('should clean accounts collection', (done) => {
     accounts.remove({}, done);
+  });
+
+  it('should clean products collection', (done) => {
+    products.remove({}, done);
   });
 
   it('should initialize db', (done) => {

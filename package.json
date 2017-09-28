@@ -44,6 +44,8 @@
     "jsonwebtoken": "^7.4.1",
     "lodash": "^4.17.4",
     "monk": "^5.0.2",
+    "uniqid": "^4.1.1",
+    "urlify": "^0.3.6",
     "version-healthcheck": "^0.1.2",
     "winston": "^2.3.1"
   },

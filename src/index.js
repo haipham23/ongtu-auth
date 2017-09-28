@@ -31,6 +31,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/healthcheck', require('express-healthcheck')());
 app.get('/version', require('version-healthcheck'));
 
+// create mongo index
+// const products = db.get('products');
+// products.createIndex('productId', { unique: true });
+
+// pass db to the route
 routes(app, db);
 
 app.use((err, req, res, next) => {

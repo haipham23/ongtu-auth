@@ -1,0 +1,52 @@
+{
+  "type": "object",
+  "required": [
+    "productName",
+    "productId",
+    "owner",
+    "productDesc",
+    "price",
+    "currency"
+  ],
+  "properties": {
+    "productName": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 50
+    },
+    "productId": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 60
+    },
+    "owner": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 20,
+      "pattern": "^[A-Za-z0-9]*$"
+    },
+    "productDesc": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 60
+    },
+    "price": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 20
+    },
+    "discount": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 20
+    },
+    "currency": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 3
+    },
+    "isActive": {
+      "type": "boolean"
+    }
+  }
+}
