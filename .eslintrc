@@ -14,6 +14,8 @@
     "setTimeout": true,
     "process": true,
     "require": true,
-    "module": true
+    "module": true,
+    "after": true,
+    "before": true
   }
 }

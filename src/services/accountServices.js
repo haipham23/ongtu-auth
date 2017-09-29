@@ -1,3 +1,4 @@
+const db = require('../db');
 const Account = require('../models/account');
 const jwt = require('../utils/jwt');
 const {
@@ -6,22 +7,23 @@ const {
   ACCOUNT_NOT_FOUND
 } = require('../constants/responses');
 
+const ACCOUNT_COLLECTION = 'accounts';
+
 
 /**
  * create account
  * @param {object} body request body
- * @param {object} db database object
  *
  * @return {object} json response
  */
-async function create(body, db) {
+async function create(body) {
   const account = new Account(body);
 
   if (!account.isValid()) {
     throw new Error(INVALID_PROPS);
   }
 
-  const collection = db.get('accounts');
+  const collection = db.get(ACCOUNT_COLLECTION);
   const isExisting = (await collection.find({
     $or: [{
       username: account.username
@@ -36,6 +38,8 @@ async function create(body, db) {
 
   await collection.insert(account.create());
 
+  db.close();
+
   return OK;
 }
 
@@ -44,18 +48,19 @@ async function create(body, db) {
  * login
  *
  * @param {object} body
- * @param {object} db
  *
  * @return {object} json response
  */
-async function login(body, db) {
+async function login(body) {
   const account = new Account(body);
-  const collection = db.get('accounts');
+  const collection = db.get(ACCOUNT_COLLECTION);
   const user = await collection.findOne({
     username: account.username
   }, {
     fields: { username: 1, password: 1 }
   });
+
+  db.close();
 
   if (!user) {
     throw new Error(ACCOUNT_NOT_FOUND);

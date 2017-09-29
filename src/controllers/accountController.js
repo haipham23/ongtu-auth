@@ -7,11 +7,10 @@ const {
  * create account
  * @param {object} req request object
  * @param {object} res response object
- * @param {object} db database object
  */
-function create(req, res, db) {
+function create(req, res) {
   accountServices
-    .create(req.body, db)
+    .create(req.body)
     .then((result) => res.json(result))
     .catch((error) => res.status(400).json(error.message));
 }
@@ -21,11 +20,10 @@ function create(req, res, db) {
  * login
  * @param {object} req request object
  * @param {object} res response object
- * @param {object} db database object
  */
-function login(req, res, db) {
+function login(req, res) {
   accountServices
-    .login(req.body, db)
+    .login(req.body)
     .then((result) => res.json(result))
     .catch((error) => res.status(400).json(error.message));
 }

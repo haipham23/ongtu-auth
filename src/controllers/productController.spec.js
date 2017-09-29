@@ -7,10 +7,9 @@ const jwt = require('../utils/jwt');
 
 describe('Product Controller', () => {
   const PRODUCT_URL = '/api/store/products';
+  const apiKey = jwt.generate('testUser');
 
   describe('add() function', () => {
-    const apiKey = jwt.generate('testUser');
-
     const VALID_ACCOUNT = {
       productName: 'Test Product',
       productDesc: 'This is the test product',
@@ -110,7 +109,33 @@ describe('Product Controller', () => {
         .end((err, res) => {
           expect(err).to.not.exist;
           expect(res.status).to.equal(200);
-          expect(res.body).to.deep.equal('OK');
+          expect(res.body).to.equal('OK');
+          done();
+        });
+    });
+  });
+
+
+  describe('getAll() function', () => {
+    it('should fail to get - missing api-key', (done) => {
+      request(app)
+        .get(PRODUCT_URL)
+        .end((err, res) => {
+          expect(err).to.not.exist;
+          expect(res.status).to.equal(400);
+          expect(res.body).to.equal('NO_PRODUCT');
+          done();
+        });
+    });
+
+    it('should succeed', (done) => {
+      request(app)
+        .get(PRODUCT_URL)
+        .set('x-api-key', apiKey)
+        .end((err, res) => {
+          expect(err).to.not.exist;
+          expect(res.status).to.equal(200);
+          expect(res.body).to.be.an.instanceof(Array);
           done();
         });
     });

@@ -5,20 +5,13 @@ const compression = require('compression');
 const helmet = require('helmet');
 const bodyParser = require('body-parser');
 const sslRedirect = require('heroku-ssl-redirect');
-const monk = require('monk');
 const getenv = require('getenv');
 const cors = require('cors');
 
 const routes = require('./routes');
 const logger = require('./utils/logger');
-
 const { SERVER_ERROR } = require('./constants/responses');
 
-const mongoUri = getenv('NODE_ENV') !== 'test' ?
-  getenv('MONGO_URI') :
-  getenv('MONGO_URI_TEST');
-
-const db = monk(mongoUri);
 const port = getenv('PORT') || 8080;
 const app = express();
 
@@ -31,12 +24,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use('/healthcheck', require('express-healthcheck')());
 app.get('/version', require('version-healthcheck'));
 
-// create mongo index
-// const products = db.get('products');
-// products.createIndex('productId', { unique: true });
-
 // pass db to the route
-routes(app, db);
+routes(app);
 
 app.use((err, req, res, next) => {
   logger.error('--- server error ---', err);

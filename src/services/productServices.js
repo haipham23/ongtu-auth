@@ -1,3 +1,4 @@
+const db = require('../db');
 const Product = require('../models/product');
 
 const {
@@ -11,11 +12,10 @@ const PRODUCTS_COLLECTION = 'products';
 /**
  * add new product
  * @param {object} body request body
- * @param {object} db database object
  *
  * @return {object} json response
  */
-async function add(body, db) {
+async function add(body) {
   const collection = db.get(PRODUCTS_COLLECTION);
   const product = new Product(body);
 
@@ -24,6 +24,8 @@ async function add(body, db) {
   }
 
   await collection.insert(product.get());
+
+  db.close();
 
   return OK;
 }
@@ -36,15 +38,22 @@ async function add(body, db) {
  *
  * @return {object} json response
  */
-async function get(owner, db) {
+async function get(owner) {
   const products = await db
     .get(PRODUCTS_COLLECTION)
     .find({
-      owner: owner
+      owner: owner,
+      isActive: true
     }, {
-      _id: -1
-    })
-    .toArray();
+      fields: {
+        _id: 0,
+        createdAt: 0,
+        updatedAt: 0,
+        isActive: 0
+      }
+    });
+
+  db.close();
 
   return products;
 }
@@ -54,11 +63,10 @@ async function get(owner, db) {
  * update
  *
  * @param {object} body
- * @param {object} db
  *
  * @return {object} json response
  */
-async function update(body, db) {
+async function update(body) {
   const product = new Product(body);
 
   await db
@@ -71,6 +79,8 @@ async function update(body, db) {
       product
     );
 
+  db.close();
+
   return OK;
 }
 
@@ -79,11 +89,10 @@ async function update(body, db) {
  * remove
  *
  * @param {object} body
- * @param {object} db
  *
  * @return {object} json response
  */
-async function remove(body, db) {
+async function remove(body) {
   const product = new Product(body);
 
   await db
@@ -95,6 +104,8 @@ async function remove(body, db) {
         isActive: false
       }
     );
+
+  db.close();
 
   return OK;
 }

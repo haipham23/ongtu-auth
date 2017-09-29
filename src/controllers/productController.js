@@ -12,9 +12,8 @@ const {
  * add product
  * @param {object} req request object
  * @param {object} res response object
- * @param {object} db database object
  */
-function add(req, res, db) {
+function add(req, res) {
   accountServices
     .getUsername(req.headers['x-api-key'])
     .then((owner) => {
@@ -24,7 +23,7 @@ function add(req, res, db) {
         { owner }
       );
 
-      return productServices.add(body, db);
+      return productServices.add(body);
     })
     .then((result) => res.json(result))
     .catch((error) => res.status(400).json(ADD_PRODUCT_FAILED));
@@ -35,12 +34,11 @@ function add(req, res, db) {
  * get all products by owner
  * @param {object} req request object
  * @param {object} res response object
- * @param {object} db database object
  */
-function getAll(req, res, db) {
+function getAll(req, res) {
   accountServices
     .getUsername(req.headers['x-api-key'])
-    .then((owner) => productServices.get(owner, db))
+    .then(productServices.get)
     .then((result) => res.json(result))
     .catch((error) => res.status(400).json(NO_PRODUCT));
 }
@@ -50,9 +48,8 @@ function getAll(req, res, db) {
  * update product
  * @param {object} req request object
  * @param {object} res response object
- * @param {object} db database object
  */
-function update(req, res, db) {
+function update(req, res) {
   accountServices
     .getUsername(req.headers['x-api-key'])
     .then((owner) => {
@@ -62,7 +59,7 @@ function update(req, res, db) {
         { owner }
       );
 
-      return productServices.update(body, db);
+      return productServices.update(body);
     })
     .then((result) => res.json(result))
     .catch((error) => res.status(400).json(UPDATE_PRODUCT_FAILED));
@@ -73,9 +70,8 @@ function update(req, res, db) {
  * remove product
  * @param {object} req request object
  * @param {object} res response object
- * @param {object} db database object
  */
-function remove(req, res, db) {
+function remove(req, res) {
   accountServices
     .getUsername(req.headers['x-api-key'])
     .then((owner) => {
@@ -85,7 +81,7 @@ function remove(req, res, db) {
         { owner }
       );
 
-      return productServices.remove(body, db);
+      return productServices.remove(body);
     })
     .then((result) => res.json(result))
     .catch((error) => res.status(400).json(REMOVE_PRODUCT_FAILED));
