@@ -69,11 +69,15 @@ async function get(owner) {
 async function update(body) {
   const product = new Product(body);
 
+  if (!product.isValid()) {
+    throw new Error(INVALID_PROPS);
+  }
+
   await db
     .get(PRODUCTS_COLLECTION)
     .findOneAndUpdate(
       {
-        ower: product.owner,
+        owner: product.owner,
         productId: product.productId
       },
       product

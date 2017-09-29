@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 const Account = require('../models/account');
+const Product = require('../models/product');
 
 describe('=== prepare ===', () => {
   const db = require('../db');
@@ -23,12 +24,21 @@ describe('=== prepare ===', () => {
       email: 'valid.email@example.com'
     });
 
+    const product = new Product({
+      productName: 'valid product',
+      productDesc: 'This is the valid product',
+      price: '200',
+      discount: '5',
+      currency: 'USD',
+      owner: 'testUser'
+    });
+
     const validUser = account.create();
+    const validProduct = product.get();
 
     accounts
       .insert(validUser)
+      .then(() => products.insert(validProduct))
       .then(() => db.close(done));
   });
-
-  after(() => db.close());
 });

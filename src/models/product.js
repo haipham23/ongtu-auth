@@ -17,7 +17,7 @@ const Product = class Product {
   constructor(o) {
     if (o) {
       this.productName = _.trim(o.productName);
-      this.productId = generateId(this.productName);
+      this.productId = o.productId || generateId(this.productName);
       this.productDesc = _.trim(escape(o.productDesc));
       this.owner = o.owner;
       this.price = _.trim(o.price);
