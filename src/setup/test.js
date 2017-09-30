@@ -24,6 +24,18 @@ describe('=== prepare ===', () => {
       email: 'valid.email@example.com'
     });
 
+    const validUser = account.create();
+
+    accounts
+      .insert(validUser)
+      .then((account) => {
+        global.TEST_ACCOUNT = account;
+
+        done();
+      });
+  });
+
+  it('should init products collection', (done) => {
     const product = new Product({
       productName: 'valid product',
       productDesc: 'This is the valid product',
@@ -33,16 +45,10 @@ describe('=== prepare ===', () => {
       owner: 'testUser'
     });
 
-    const validUser = account.create();
     const validProduct = product.get();
 
-    accounts
-      .insert(validUser)
-      .then((account) => {
-        global.TEST_ACCOUNT = account;
-
-        return products.insert(validProduct);
-      })
+    products
+      .insert(validProduct)
       .then((product) => {
         global.TEST_PRODUCT = product;
 
