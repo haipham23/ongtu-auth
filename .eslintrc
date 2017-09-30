@@ -16,6 +16,7 @@
     "require": true,
     "module": true,
     "after": true,
-    "before": true
+    "before": true,
+    "global": true
   }
 }

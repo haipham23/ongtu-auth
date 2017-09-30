@@ -99,7 +99,7 @@ async function update(body) {
 async function remove(body) {
   const product = new Product(body);
 
-  await db
+  const result = await db
     .get(PRODUCTS_COLLECTION)
     .findOneAndUpdate({
         owner: product.owner,
@@ -110,6 +110,10 @@ async function remove(body) {
     );
 
   db.close();
+
+  if (result.lastErrorObject) {
+    throw new Error(INVALID_PROPS);
+  }
 
   return OK;
 }

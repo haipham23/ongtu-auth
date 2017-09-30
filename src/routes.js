@@ -17,6 +17,7 @@ const route = (app) => {
   router.get('/store/products', productController.getAll);
   router.post('/store/products', productController.add);
   router.put('/store/products', productController.update);
+  router.delete('/store/products', productController.remove);
 
   /* General */
   app.use('/api', router);

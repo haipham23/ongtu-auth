@@ -152,34 +152,25 @@ describe('Product Controller', () => {
     let INVALID_ACCOUNT_4;
     let INVALID_ACCOUNT_5;
 
-    before((done) => {
-      productServices
-        .get('testUser')
-        .then((products) => {
-          productId =
-            products
-              .filter((p) => p.productName === 'valid product')[0]
-              .productId;
+    before(() => {
+      productId = global.TEST_PRODUCT.productId;
 
-          expect(productId).to.be.a.string;
+      expect(productId).to.be.a.string;
 
-          VALID_PRODUCT = {
-            productName: 'updated product',
-            productId: productId,
-            productDesc: 'This is the test product update',
-            price: '200',
-            discount: '5',
-            currency: 'USD'
-          };
+      VALID_PRODUCT = {
+        productName: 'updated product',
+        productId: productId,
+        productDesc: 'This is the test product update',
+        price: '200',
+        discount: '5',
+        currency: 'USD'
+      };
 
-          INVALID_ACCOUNT_1 = _.omit(VALID_PRODUCT, 'productName');
-          INVALID_ACCOUNT_2 = _.omit(VALID_PRODUCT, 'productDesc');
-          INVALID_ACCOUNT_3 = _.omit(VALID_PRODUCT, 'price');
-          INVALID_ACCOUNT_4 = _.omit(VALID_PRODUCT, 'discount');
-          INVALID_ACCOUNT_5 = _.omit(VALID_PRODUCT, 'currency');
-
-          done();
-        });
+      INVALID_ACCOUNT_1 = _.omit(VALID_PRODUCT, 'productName');
+      INVALID_ACCOUNT_2 = _.omit(VALID_PRODUCT, 'productDesc');
+      INVALID_ACCOUNT_3 = _.omit(VALID_PRODUCT, 'price');
+      INVALID_ACCOUNT_4 = _.omit(VALID_PRODUCT, 'discount');
+      INVALID_ACCOUNT_5 = _.omit(VALID_PRODUCT, 'currency');
     });
 
 
@@ -284,6 +275,106 @@ describe('Product Controller', () => {
               .productName;
 
           expect(productName).to.equal('updated product');
+
+          done();
+        });
+    });
+  });
+
+
+  describe('remove() function', () => {
+    let productId;
+    let VALID_PRODUCT;
+    let INVALID_PRODUCT_1;
+    let INVALID_PRODUCT_2;
+
+    before(() => {
+      productId = global.TEST_PRODUCT.productId;
+
+      expect(productId).to.be.a.string;
+
+      VALID_PRODUCT = {
+        productName: 'updated product',
+        productId: productId,
+        productDesc: 'This is the test product update',
+        price: '200',
+        discount: '5',
+        currency: 'USD'
+      };
+
+      INVALID_PRODUCT_1 = _.omit(VALID_PRODUCT, 'productId');
+      INVALID_PRODUCT_2 = Object.assign(
+        {},
+        VALID_PRODUCT,
+        { productId: '123' }
+      );
+    });
+
+
+    it('should fail to update - missing apiKey', (done) => {
+      request(app)
+        .delete(PRODUCT_URL)
+        .send(VALID_PRODUCT)
+        .end((err, res) => {
+          expect(err).to.not.exist;
+          expect(res.status).to.equal(400);
+          expect(res.body).to.equal('REMOVE_PRODUCT_FAILED');
+          done();
+        });
+    });
+
+    it('should fail to update - missing productId', (done) => {
+      request(app)
+        .delete(PRODUCT_URL)
+        .set('x-api-key', apiKey)
+        .send(INVALID_PRODUCT_1, {})
+        .end((err, res) => {
+          expect(err).to.not.exist;
+          expect(res.status).to.equal(400);
+          expect(res.body).to.equal('REMOVE_PRODUCT_FAILED');
+          done();
+        });
+    });
+
+
+    it('should fail to update - invalid productId', (done) => {
+      request(app)
+        .delete(PRODUCT_URL)
+        .set('x-api-key', apiKey)
+        .send(INVALID_PRODUCT_2, {})
+        .end((err, res) => {
+          expect(err).to.not.exist;
+          expect(res.status).to.equal(400);
+          expect(res.body).to.equal('REMOVE_PRODUCT_FAILED');
+          done();
+        });
+    });
+
+
+    it('should succeed', (done) => {
+      request(app)
+        .delete(PRODUCT_URL)
+        .set('x-api-key', apiKey)
+        .send(VALID_PRODUCT)
+        .end((err, res) => {
+          expect(err).to.not.exist;
+          expect(res.status).to.equal(200);
+          expect(res.body).to.equal('OK');
+          done();
+        });
+    });
+
+
+    after((done) => {
+      productServices
+        .get('testUser')
+        .then((products) => {
+          const isVisible =
+            products
+              .filter((p) => p.productId === productId)
+              .length > 0;
+
+          expect(isVisible).to.be.false;
 
           done();
         });

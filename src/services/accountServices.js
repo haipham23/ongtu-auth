@@ -109,10 +109,6 @@ function getUsername(token) {
   return new Promise((resolve, reject) => {
     const username = jwt.verify(token);
 
-    if (!username) {
-      return reject('Invalid Token');
-    }
-
     return resolve(username);
   });
 }

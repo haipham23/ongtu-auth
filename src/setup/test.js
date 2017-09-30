@@ -38,7 +38,17 @@ describe('=== prepare ===', () => {
 
     accounts
       .insert(validUser)
-      .then(() => products.insert(validProduct))
-      .then(() => db.close(done));
+      .then((account) => {
+        global.TEST_ACCOUNT = account;
+
+        return products.insert(validProduct);
+      })
+      .then((product) => {
+        global.TEST_PRODUCT = product;
+
+        done();
+      });
   });
+
+  after(() => db.close());
 });
