@@ -101,17 +101,15 @@ async function remove(body) {
 
   const result = await db
     .get(PRODUCTS_COLLECTION)
-    .findOneAndUpdate({
-        owner: product.owner,
-        productId: product.productId
-      }, {
-        isActive: false
-      }
-    );
+    .remove({
+      owner: product.owner,
+      productId: product.productId
+    });
 
   db.close();
 
-  if (result.lastErrorObject) {
+  // result.result.n is the number of object deleted
+  if (result.result.n < 1) {
     throw new Error(INVALID_PROPS);
   }
 
