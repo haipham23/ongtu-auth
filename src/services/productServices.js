@@ -42,15 +42,14 @@ async function get(owner) {
   const products = await db
     .get(PRODUCTS_COLLECTION)
     .find({
-      owner: owner,
-      isActive: true
+      owner: owner
     }, {
       fields: {
         _id: 0,
         createdAt: 0,
-        updatedAt: 0,
-        isActive: 0
-      }
+        owner: 0
+      },
+      limit: 20
     });
 
   db.close();
@@ -73,17 +72,57 @@ async function update(body) {
     throw new Error(INVALID_PROPS);
   }
 
+  const productObj = product.get();
+
   await db
     .get(PRODUCTS_COLLECTION)
     .findOneAndUpdate(
       {
-        owner: product.owner,
-        productId: product.productId
+        owner: productObj.owner,
+        productId: productObj.productId
       },
-      product
+      productObj
     );
 
   db.close();
+
+  return OK;
+}
+
+
+/**
+ * toggle
+ *
+ * @param {object} body
+ *
+ * @return {object} json response
+ */
+async function toggle(body) {
+  if (!body.productId) {
+    throw new Error(INVALID_PROPS);
+  }
+
+  const product = new Product(body);
+  const { owner, productId, isActive } = product.get();
+
+  const result = await db
+    .get(PRODUCTS_COLLECTION)
+    .findOneAndUpdate(
+      {
+        owner: owner,
+        productId: productId
+      }, {
+        $set: {
+          isActive: !!isActive
+        }
+      }
+    );
+
+  db.close();
+
+  if (result.lastErrorObject) {
+    throw new Error(INVALID_PROPS);
+  }
 
   return OK;
 }
@@ -97,6 +136,10 @@ async function update(body) {
  * @return {object} json response
  */
 async function remove(body) {
+  if (!body.productId) {
+    throw new Error(INVALID_PROPS);
+  }
+
   const product = new Product(body);
 
   const result = await db
@@ -121,5 +164,6 @@ module.exports = {
   add,
   get,
   update,
+  toggle,
   remove
 };

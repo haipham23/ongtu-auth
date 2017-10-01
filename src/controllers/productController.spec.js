@@ -282,6 +282,91 @@ describe('Product Controller', () => {
   });
 
 
+  describe('toggle() function', () => {
+    let productId;
+    let VALID_PRODUCT_URL;
+    let INVALID_PRODUCT_URL_1;
+    let INVALID_PRODUCT_URL_2;
+
+    before(() => {
+      productId = global.TEST_PRODUCT.productId;
+
+      VALID_PRODUCT_URL =
+        `${PRODUCT_URL}/toggle?productId=${productId}&isActive=false`;
+
+      INVALID_PRODUCT_URL_1 =
+        `${PRODUCT_URL}/toggle?isActive=false`;
+
+      INVALID_PRODUCT_URL_2 =
+        `${PRODUCT_URL}/toggle?productId=$123&isActive=false`;
+    });
+
+    it('should fail to update - missing apiKey', (done) => {
+      request(app)
+        .get(VALID_PRODUCT_URL)
+        .end((err, res) => {
+          expect(err).to.not.exist;
+          expect(res.status).to.equal(400);
+          expect(res.body).to.equal('TOGGLE_PRODUCT_FAILED');
+          done();
+        });
+    });
+
+    it('should fail to update - missing productId', (done) => {
+      request(app)
+        .get(INVALID_PRODUCT_URL_1)
+        .set('x-api-key', apiKey)
+        .end((err, res) => {
+          expect(err).to.not.exist;
+          expect(res.status).to.equal(400);
+          expect(res.body).to.equal('TOGGLE_PRODUCT_FAILED');
+          done();
+        });
+    });
+
+
+    it('should fail to update - invalid productId', (done) => {
+      request(app)
+        .get(INVALID_PRODUCT_URL_2)
+        .set('x-api-key', apiKey)
+        .end((err, res) => {
+          expect(err).to.not.exist;
+          expect(res.status).to.equal(400);
+          expect(res.body).to.equal('TOGGLE_PRODUCT_FAILED');
+          done();
+        });
+    });
+
+
+    it('should succeed', (done) => {
+      request(app)
+        .get(VALID_PRODUCT_URL)
+        .set('x-api-key', apiKey)
+        .end((err, res) => {
+          expect(err).to.not.exist;
+          expect(res.status).to.equal(200);
+          expect(res.body).to.equal('OK');
+          done();
+        });
+    });
+
+
+    after((done) => {
+      productServices
+        .get('testUser')
+        .then((products) => {
+          const product =
+            products
+              .filter((p) => p.productId === productId)[0];
+
+          expect(product.isActive).to.be.false;
+
+          done();
+        });
+    });
+  });
+
+
   describe('remove() function', () => {
     let productId;
     let VALID_PRODUCT;

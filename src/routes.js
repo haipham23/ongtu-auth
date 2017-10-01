@@ -15,6 +15,7 @@ const route = (app) => {
 
   /* Products */
   router.get('/store/products', productController.getAll);
+  router.get('/store/products/toggle/', productController.toggle);
   router.post('/store/products', productController.add);
   router.put('/store/products', productController.update);
   router.delete('/store/products', productController.remove);

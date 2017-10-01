@@ -5,6 +5,7 @@ const {
   ADD_PRODUCT_FAILED,
   NO_PRODUCT,
   UPDATE_PRODUCT_FAILED,
+  TOGGLE_PRODUCT_FAILED,
   REMOVE_PRODUCT_FAILED
 } = require('../constants/responses');
 
@@ -67,6 +68,28 @@ function update(req, res) {
 
 
 /**
+ * toggle product status
+ * @param {object} req request object
+ * @param {object} res response object
+ */
+function toggle(req, res) {
+  accountServices
+    .getUsername(req.headers['x-api-key'])
+    .then((owner) => {
+      const body = {
+        owner,
+        productId: req.query.productId,
+        isActive: req.query.isActive
+      };
+
+      return productServices.toggle(body);
+    })
+    .then((result) => res.json(result))
+    .catch((error) => res.status(400).json(TOGGLE_PRODUCT_FAILED));
+}
+
+
+/**
  * remove product
  * @param {object} req request object
  * @param {object} res response object
@@ -91,5 +114,6 @@ module.exports = {
   add,
   getAll,
   update,
+  toggle,
   remove
 };

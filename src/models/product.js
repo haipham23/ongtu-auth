@@ -23,7 +23,9 @@ const Product = class Product {
       this.price = _.trim(o.price);
       this.discount = _.trim(o.discount);
       this.currency = _.trim(o.currency);
-      this.isActive = true;
+      this.isActive = typeof o.isActive === 'string'
+        ? o.isActive === 'true'
+        : true,
       this.createdAt = +new Date();
       this.updatedAt = +new Date();
     }

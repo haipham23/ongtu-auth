@@ -28,7 +28,7 @@
     "productDesc": {
       "type": "string",
       "minLength": 10,
-      "maxLength": 60
+      "maxLength": 6000
     },
     "price": {
       "type": "string",
